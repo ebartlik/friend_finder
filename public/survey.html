@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Friend Finder</title>
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+
+    <div class = "container">
+
+                <!-- Reservation Page -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">Tinder...I Mean Friend Finder</h2>
+                        <h4>For each question choose 1-5 (1 strongly disagree) (5
+                             strongly agree)</h4>
+                    </div>
+                    <div class="panel-body">
+
+                        <form role="form">
+
+                            <div class="form-group">
+                                <label for="name-input">Name</label>
+                                <input type="text" class="form-control" id="name-input">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="photo-input">Link to Photo Image</label>
+                                <input type="text" class="form-control" id="photo-input">
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="questionOne">1) If your significant other asked you to go out on a romantic date at an expensive Italian restaurant, how strongly would you rather stay in eat chips and binge watch Netflix?</label>
+                                <input type="number" class="form-control" id="questionOne" min="1" max="5">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="questionTwo">2) Are you a tide pod person? (laundry or eating)</label>
+                                <input type="number" class="form-control" id="questionTwo" min="1" max="5">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="questionThree">3) When holding a pen with a clip on it, should you break it?</label>
+                                <input type="number" class="form-control" id="questionThree" min="1" max="5">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="questionFour">4) Would you pick fruity candy over chocolate?</label>
+                                <input type="number" class="form-control" id="questionFour" min="1" max="5">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="questionFive">5) Do you like suns over moons?</label>
+                                <input type="number" class="form-control" id="questionFive" min="1" max="5">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="questionSix">6) If you have a desk at work, is it organized or is it a clusterf***? (1 organized) (5 clusterf***)</label>
+                                <input type="number" class="form-control" id="questionSix" min="1" max="5">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="questionSeven">7) Coffee over tea?</label>
+                                <input type="number" class="form-control" id="questionSeven" min="1" max="5">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="questionEight">8) Do you enjoy long walks on the beach or do you find it tiring? (1 enjoy) (5 my calves are killing me)</label>
+                                <input type="number" class="form-control" id="questionEight" min="1" max="5">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="questionNine">9) Would you rather code as opposed to going out on a Friday night? </label>
+                                <input type="number" class="form-control" id="questionNine" min="1" max="5">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="questionTen">When coding a dating app, do you just want to break down and cry or are you into that? (1 cry) (5 into that)</label>
+                                <input type="number" class="form-control" id="questionTen" min="1" max="5">
+                            </div>
+
+
+                            
+
+                            <button type="submit" class="btn btn-primary submit">Submit</button>
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    
+
+    </div>
+
+    <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4 class="panel-title">Current Users</h4>
+            </div>
+            <div class="panel-body" id="friendSection">
+            </div>
+          </div>
+
+</body>
+
+</html>
+
+<script type="text/javascript">
+
+    
+    $(".submit").on("click", function (event) {
+        event.preventDefault();
+
+        // Here we grab the form elements
+        var results = {
+            name: $("#name-input").val(),
+            photo: $("#photo-input").val(),
+            score:  [
+                $("#questionOne").val(),
+                $("#questionTwo").val(),
+                $("#questionThree").val(),
+                $("#questionFour").val(),
+                $("#questionFive").val(),
+                $("#questionSix").val(),
+                $("#questionSeven").val(),
+                $("#questionEight").val(),
+                $("#questionNine").val(),
+                $("#questionTen").val(),
+        ]
+      
+        };
+
+        console.log(results);
+
+
+        $.post("/api/survey", results,
+            function (data) {
+
+              
+                if (data) {
+                    alert("You submitted");
+                }
+
+            
+                else {
+                    alert("Submission failed");
+                }
+
+                // Clear the form when submitting
+                $("#name-input").val("");
+                $("#photo-input").val("");
+                $("#questionOne").val("");
+                $("#questionTwo").val("");
+                $("#questionThree").val("");
+                $("#questionFour").val("");
+                $("#questionFive").val("");
+                $("#questionSix").val("");
+                $("#questionSeven").val("");
+                $("#questionEight").val("");
+                $("#questionNine").val("");
+                $("#questionTen").val("");
+            });
+
+    });
+
+   
+
+
+
+// function runSurveyQuery() {
+
+
+
+//   // The AJAX function uses the URL of our API to GET the data associated with it (initially set to localhost)
+//   $.ajax({ url: currentURL + "/api/survey", method: "GET" })
+//     .then(function(friends) {
+
+
+//       console.log("------------------------------------");
+//       console.log("URL: " + currentURL + "/api/survey");
+//       console.log("------------------------------------");
+
+//       // Here we then log the NYTData to console, where it will show up as an object.
+//       console.log(friends);
+//       console.log("------------------------------------");
+
+
+//       for (var i = 0; i < friends.length; i++) {
+
+//      
+//         var friendSection = $("<div>");
+//         // friendSection.attr("id", + i + 1);
+//         // friendSection.attr("id", "friendID: " + i + 1);
+//         $("#friendSection").append(friendSection);
+
+//         var friendNumber = i + 1;
+
+
+//         
+//         $("#friendSection" + i + 1).append("<h2><span class='label label-primary'>" + friendNumber + "</span> | " + friends[i].name + "</h2>");
+//       }
+//     });
+// }
+
+
+</script>
